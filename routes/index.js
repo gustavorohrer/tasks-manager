@@ -2,11 +2,14 @@ const express = require("express");
 const router = express.Router();
 const taskController = require("../controllers/taskController");
 
-const { catchErrors } = require("../handlers/errorHandlers");
+const { catchErrors } = require("../middlewares/handlers/errorHandlers");
+const { validateTask } = require("../middlewares/validators/taskValidator");
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
-});
+router.post(
+  "/",
+  validateTask,
+  catchErrors(taskController.createTask),
+  catchErrors(taskController.postCard)
+);
 
 module.exports = router;

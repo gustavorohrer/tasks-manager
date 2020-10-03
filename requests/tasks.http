@@ -1,0 +1,31 @@
+POST {{host}}
+Content-Type: application/json
+
+{
+  "type": "issue",
+  "title": "Send message",
+  "description": "Let pilots send messages to Central"
+}
+
+###
+
+POST {{host}}
+Content-Type: application/json
+
+{
+  "type": "bug",
+  "description": "Cockpit is not depressurizing correctly"
+}
+
+###
+
+POST {{host}}
+Content-Type: application/json
+
+{
+  "type": "task",
+  "title": "Clean the Rocket",
+  "category": "Maintenance"
+}
+
+###
