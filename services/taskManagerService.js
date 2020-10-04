@@ -10,12 +10,13 @@ const getListId = async () => {
 };
 
 const getBugNumber = async (listId) => {
-  //TODO
+  const listCards = await taskManagerClient.getCardsOnList(listId);
+  return listCards.filter((card) => card.name.startsWith("bug-")).length + 1;
 };
 
-const randomizeTitle = (desc, listId) => {
+const randomizeTitle = async (desc, listId) => {
   const randomWord = desc.split(" ").slice(0, 5).join("_");
-  const bugNumber = getBugNumber(listId);
+  const bugNumber = await getBugNumber(listId);
   return `bug-${randomWord}-${bugNumber}`;
 };
 
@@ -36,7 +37,7 @@ const buildCard = async ({ type, title, description, category }) => {
   //FIXME refactor to scale if new flavors are added
   switch (type) {
     case "bug":
-      name = randomizeTitle(description, listId);
+      name = await randomizeTitle(description, listId);
       extraParams.idMembers = []; //TODO refactor this
       extraParams.idLabels = []; //TODO refactor this
       break;
