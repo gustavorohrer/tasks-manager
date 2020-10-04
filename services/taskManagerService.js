@@ -9,15 +9,50 @@ const getListId = async () => {
   return toDoList.id;
 };
 
-const buildCard = async (body) => {
-  //if it is a bug: 1) randomize title, 2) assign random member, 3) put "Bug" label
-  //if it is a task: label it with category
+const getBugNumber = async (listId) => {
+  //TODO
+};
+
+const randomizeTitle = (desc, listId) => {
+  const randomWord = desc.split(" ").slice(0, 5).join("_");
+  const bugNumber = getBugNumber(listId);
+  return `bug-${randomWord}-${bugNumber}`;
+};
+
+function getIdLabelByCategory() {
+  //TODO
+  return undefined;
+}
+
+const buildCard = async ({ type, title, description, category }) => {
+  let name = title;
+
+  const extraParams = {
+    desc: description,
+  };
+
   const listId = await getListId();
+
+  //FIXME refactor to scale if new flavors are added
+  switch (type) {
+    case "bug":
+      name = randomizeTitle(description, listId);
+      extraParams.idMembers = []; //TODO refactor this
+      extraParams.idLabels = []; //TODO refactor this
+      break;
+    case "issue":
+      //TODO check if exists?
+      break;
+    case "task":
+      extraParams.idLabels = getIdLabelByCategory(category);
+      break;
+    default:
+      throw Error("Invalid card type!");
+  }
+
   return {
-    name: body.title,
-    extraParams: {
-      description: body.description,
-    },
+    name,
+    extraParams,
     listId,
   };
 };

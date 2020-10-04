@@ -1,17 +1,15 @@
 const { body, validationResult } = require("express-validator");
+const { CARD_TYPES, TASK_CATEGORIES } = require("../../data/data");
 
-const TASK_TYPES = ["bug", "issue", "task"];
-const CATEGORIES = ["Maintenance", "Research", "Test"];
-
-//FIXME this will not escalate if new types are added
-exports.validateTask = [
+//FIXME refactor to scale if new flavors are added
+exports.validateCard = [
   body("type")
     .exists()
     .withMessage("Type is required!")
     .bail()
     .trim()
     .escape()
-    .isIn(TASK_TYPES)
+    .isIn(CARD_TYPES)
     .withMessage("Invalid type!")
     .bail(),
   body("title")
@@ -45,7 +43,7 @@ exports.validateTask = [
     .bail()
     .trim()
     .escape()
-    .isIn(CATEGORIES)
+    .isIn(TASK_CATEGORIES)
     .withMessage("Invalid category!"),
   (req, res, next) => {
     const errors = validationResult(req);
