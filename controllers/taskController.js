@@ -1,5 +1,6 @@
-exports.createTask = async (req, res, next) => {
-  next();
-};
+const taskManagerService = require("../services/taskManagerService");
 
-exports.postCard = async (req, res) => {};
+exports.createCard = async (req, res) => {
+  const result = await taskManagerService.createCard(req.body);
+  return res.json(result);
+};

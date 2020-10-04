@@ -3,6 +3,7 @@ const { body, validationResult } = require("express-validator");
 const TASK_TYPES = ["bug", "issue", "task"];
 const CATEGORIES = ["Maintenance", "Research", "Test"];
 
+//FIXME this will not escalate if new types are added
 exports.validateTask = [
   body("type")
     .exists()
